@@ -14,7 +14,6 @@ const user = require('./data/user');
 // register route
 app.post('/register', (req, res) => {
     try {
-        // Validate request body
         if (!req.body.username || !req.body.password) {
             return res.status(400).json({ message: 'Username and password are required' });
         }
@@ -34,7 +33,7 @@ app.post('/register', (req, res) => {
         
     }
 })
-// Simulated login route
+// Login route
 app.post('/login', (req, res) => {
   const { username ,password} = req.body;
   if (!username && !password) return res.status(400).json({ message: 'Username and password  required' });
@@ -46,7 +45,7 @@ app.post('/login', (req, res) => {
   res.status(200).json({ token });
 });
 
-// Register task routes
+
 app.use('/tasks', taskRoutes);
 
 

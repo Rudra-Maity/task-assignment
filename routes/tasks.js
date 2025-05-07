@@ -4,7 +4,6 @@ const tasks = require('../data/tasks');
 const generateId = require('../utils/generateId');
 const auth = require('../middleware/auth');
 
-// Validate Task
 const validateTask = (data) => {
   const { title, description } = data;
   return title && description;
@@ -14,12 +13,10 @@ const validateTask = (data) => {
 router.get('/', (req, res) => {
   let result = [...tasks];
 
-  // Filtering
   if (req.query.status) {
     result = result.filter(task => task.status === req.query.status);
   }
 
-  // Sorting
   const { sortBy = 'createdAt', order = 'desc' } = req.query;
   result.sort((a, b) => {
     const isAsc = order === 'asc';
@@ -28,7 +25,6 @@ router.get('/', (req, res) => {
     return 0;
   });
 
-  // Pagination
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 5;
   const start = (page - 1) * limit;
@@ -41,14 +37,12 @@ router.get('/', (req, res) => {
   });
 });
 
-// GET /tasks/:id
 router.get('/:id', (req, res) => {
   const task = tasks.find(t => t.id === req.params.id);
   if (!task) return res.status(404).json({ message: 'Task not found' });
   res.status(200).json(task);
 });
 
-// POST /tasks (Protected)
 router.post('/', auth, (req, res) => {
   const { title, description, status = 'pending' } = req.body;
   if (!validateTask(req.body)) {
@@ -66,7 +60,7 @@ router.post('/', auth, (req, res) => {
   res.status(201).json(newTask);
 });
 
-// PUT /tasks/:id (Protected)
+// PUT /tasks/:id 
 router.put('/:id', auth, (req, res) => {
   const task = tasks.find(t => t.id === req.params.id);
   if (!task) return res.status(404).json({ message: 'Task not found' });
@@ -83,7 +77,7 @@ router.put('/:id', auth, (req, res) => {
   res.status(200).json(task);
 });
 
-// DELETE /tasks/:id (Protected)
+// DELETE /tasks/:id 
 router.delete('/:id', auth, (req, res) => {
   const index = tasks.findIndex(t => t.id === req.params.id);
   if (index === -1) return res.status(404).json({ message: 'Task not found' });
