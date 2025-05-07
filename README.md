@@ -1,6 +1,9 @@
 #  Task Manager API
 
 A simple RESTful API built with **Node.js** and **Express.js** to manage tasks (to-do items) with **in-memory storage**, **user authentication using JWT**, and support for **pagination, filtering, and sorting**.
+# User Authentication - Task Manager 
+
+This is a simple user authentication system for a task manager  using **Node.js**, **Express.js**, **JWT**, and **cookies**.
 
 ---
 
